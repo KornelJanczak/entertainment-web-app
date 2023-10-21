@@ -1,0 +1,61 @@
+.movie__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.movie__box {
+  position: relative;
+}
+
+.movie__img {
+  max-width: 100%;
+  border-radius: 14px;
+}
+
+.movie__info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 0.5rem;
+}
+
+.movie__ul {
+  display: flex;
+  /* justify-content: flex-start;
+  align-items: flex-start; */
+  color: #ffff;
+  list-style: none;
+  gap: 2rem;
+}
+
+.movie__li {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.move__title {
+  color: #ffffff;
+  font-size: 1.8rem;
+}
+
+.movie__bookmark__btn {
+  position: absolute;
+  top: 10%;
+  right: 7%;
+  width: 4rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: none;
+  background-color: #10141e80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.movie__bookmark__btn:hover {
+  cursor: pointer;
+}

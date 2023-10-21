@@ -1,0 +1,27 @@
+.search__form {
+  display: flex;
+  gap: 1rem;
+  padding-top: 3rem;
+  width: 100%;
+  padding-right: 2rem;
+}
+
+.search__icon {
+}
+
+.search__input {
+  background-color: inherit;
+  font-family: inherit;
+  outline: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.8rem;
+  width: 100%;
+  border-bottom: 1px solid #10141e;
+  box-sizing: border-box;
+}
+
+.search__input:focus {
+  border-bottom: 1px solid #ffffff;
+  transition: all 0.3s ease;
+}
