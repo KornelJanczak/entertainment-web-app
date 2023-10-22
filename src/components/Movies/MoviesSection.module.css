@@ -4,4 +4,13 @@
   column-gap: 3rem;
   row-gap: 3rem;
   padding: 4rem;
+  padding-top: 2rem;
+}
+
+.movies__header {
+  color: #ffff;
+  letter-spacing: 0.5px;
+  padding: 3rem 4rem 0rem 4rem;
+  font-size: 2.8rem;
+  font-weight: 400;
 }

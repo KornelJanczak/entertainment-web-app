@@ -1,44 +1,66 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MoviesSection from "../components/Movies/MoviesSection";
-import { fetchData, fetchMoviesData } from "../store/movies-actions";
-import { json, useLoaderData } from "react-router-dom";
-import { useAppSelector } from "../store/hooks-actions";
-import { useAppDispatch } from "../store/hooks-actions";
-import { moviesActions } from "../store/movies-slice";
+import { useLoaderData, useParams } from "react-router-dom";
+import getJSON from "../helpers/get-json";
+import { Imovie } from "../models/@store-type";
+import { LoaderFunction } from "react-router-dom";
+import { nanoid } from "nanoid";
 
 const MoviesPage: React.FC<any> = (data) => {
-  const dispatch = useAppDispatch();
-  // const events = useLoaderData();
-  // const moviesa = useAppSelector((store) => store.movies.items);
-  const movies = useAppSelector((store) => store.movies.onlyMovies);
+  const loaderData = useLoaderData();
+  const parm = useParams();
 
-  useEffect(() => {
-    dispatch(moviesActions.addOnlyMovies());
-    console.log(`dis movv`);
-    
-  }, []);
-  // console.log(events);
-  // console.log(moviesa);
-  console.log(movies);
-
-  // useEffect(() => {
-  //   if (movies.length > 0) return;
-  //   dispatch(moviesActions.addOnlyMovies(events));
-  // }, [dispatch]);
-
-  return <MoviesSection data={movies} />;
+  return <MoviesSection title={parm.category} data={loaderData as Imovie[]} />;
 };
 
 export default MoviesPage;
 
-// export async function loader() {
-//   // const response = await fetch("data.json");
-//   // console.log(response);
-//   // if (!response.ok) {
-//   //   console.log(`a`);
-//   //   throw json({ message: "Could not fetch events." }, { status: 500 });
-//   // } else {
-//   //   const resData = await response.json();
-//   //   return resData.events;
-//   // }
-// }
+export const loader: LoaderFunction<{
+  params: { category: string };
+}> = async ({ params }) => {
+  const parm = params.category === "series" ? "TV Series" : params.category;
+  const data = await getJSON();
+  const storedId = localStorage.getItem("id") as string;
+  console.log(storedId);
+
+  const filteredArr = data
+    .filter(
+      (movie: Imovie) => movie.category.toLowerCase() === parm?.toLowerCase()
+    )
+    .map((movie: Imovie) => {
+      const updateMovie = { id: nanoid(), ...movie };
+
+      if (movie.title === storedId) {
+        return { ...updateMovie, isBookmarked: true };
+      }
+
+      return updateMovie;
+    });
+  console.log(filteredArr);
+
+  
+  localStorage.removeItem("id");
+  
+  return filteredArr;
+};
+
+// const addBokkmark = data.map((movie: Imovie) =>
+// movie.id === storedId ? { ...movie, isBookmarked: true } : movie
+// );
+// const addID = data.map((movie: Imovie) => {
+  //   const updateMovie = { id: nanoid(), ...movie };
+  
+  //   console.log(storedId);
+  //   if (movie.id === storedId) {
+    //     return { ...updateMovie, isBookmarked: true };
+    //   }
+
+    //   return updateMovie;
+    // });
+    // console.log(addID);
+    
+    // const onlyMovies = addID.filter(
+    //   (movie: Imovie) => movie.category.toLowerCase() === parm?.toLowerCase()
+    // );
+    
+    // return onlyMovies;

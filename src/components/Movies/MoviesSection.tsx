@@ -1,19 +1,21 @@
 import React from "react";
 import classes from "./MoviesSection.module.css";
-import { useAppDispatch } from "../../store/hooks-actions";
-import { fetchMoviesData } from "../../store/movies-actions";
 import Movie from "./Movie";
 import { Imovie, MovieSecProps } from "../../models/@store-type";
 
-const MoviesSection: React.FC<MovieSecProps> = ({ data }) => {
-
+const MoviesSection: React.FC<MovieSecProps> = ({ data, title }) => {
+  const headTitle = title === "series" ? "TV Series" : "Movies";
+  const mainTitle = title === "Recommended for you" ? title : headTitle;
 
   return (
-    <section className={classes.movies__section}>
-      {data.map((movieData: Imovie, i: number) => (
-        <Movie key={i} data={movieData} />
-      ))}
-    </section>
+    <>
+      <h1 className={classes.movies__header}>{mainTitle}</h1>
+      <section className={classes.movies__section}>
+        {data.map((movieData: Imovie, i: number) => (
+          <Movie key={i} data={movieData} />
+        ))}
+      </section>
+    </>
   );
 };
 

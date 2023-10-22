@@ -4,30 +4,26 @@ import { fetchMoviesData } from "./store/movies-actions";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./pages/Root";
 import HomePage from "./pages/Home";
-import MoviesPage from "./pages/Movies";
-
-import { moviesActions } from "./store/movies-slice";
+import MoviesPage, { loader as MovieLoader } from "./pages/Movies";
+import getJSON from "./helpers/get-json";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const movies = useAppSelector((store) => store);
+  // const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchMoviesData());
-  }, [dispatch]);
-
-  console.log(`home`);
-  console.log(movies);
+  // useEffect(() => {
+  //   dispatch(fetchMoviesData());
+  // }, [dispatch]);
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout />,
       children: [
-        { index: true, element: <HomePage /> },
+        { index: true, element: <HomePage />, loader: getJSON },
         {
-          path: "/movies",
+          path: ":category",
           element: <MoviesPage />,
+          loader: MovieLoader,
         },
       ],
     },

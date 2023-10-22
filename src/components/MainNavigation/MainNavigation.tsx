@@ -30,7 +30,7 @@ const MainNavigation: React.FC = () => {
           </li>
           <li className={classes.nav__li}>
             <NavLink
-              to="/movies"
+              to="movie"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
@@ -44,7 +44,7 @@ const MainNavigation: React.FC = () => {
           </li>
           <li className={classes.nav__li}>
             <NavLink
-              to="/"
+              to="series"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }

@@ -32,7 +32,8 @@ export type PossibleActions = {
 };
 
 export type MovieSecProps = {
-  data: any;
+  data: Imovie[];
+  title: string | undefined;
 };
 
 export type MovieProps = {

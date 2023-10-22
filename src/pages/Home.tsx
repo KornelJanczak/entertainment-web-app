@@ -1,12 +1,14 @@
-import SearchBar from "../components/SearchBar/SearchBar";
-import { Outlet } from "react-router-dom";
-import { useAppSelector } from "../store/hooks-actions";
+import { useLoaderData } from "react-router-dom";
 import MoviesSection from "../components/Movies/MoviesSection";
+import React from "react";
+import { Imovie } from "../models/@store-type";
 
-function HomePage() {
-  const movies = useAppSelector((store) => store.movies.items);
+const HomePage: React.FC = () => {
+  const events = useLoaderData();
 
-  return <MoviesSection data={movies} />;
-}
+  return (
+    <MoviesSection title="Recommended for you" data={events as Imovie[]} />
+  );
+};
 
 export default HomePage;
