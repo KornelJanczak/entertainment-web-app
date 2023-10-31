@@ -2,3 +2,18 @@
   display: grid;
   grid-template-columns: 7fr 93fr;
 }
+
+.main__section {
+  /* overflow-y: scroll; */
+  /* scrollbar-color: red; */
+  position: relative;
+}
+
+.main__section::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px #fc4747;
+}
+
+.main__section::-webkit-scrollbar-thumb {
+  background-color: #fc4747;
+  outline: 1px solid #fc4747;
+}

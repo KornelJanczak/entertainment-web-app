@@ -1,43 +1,62 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "./store/hooks-actions";
-import { fetchMoviesData } from "./store/movies-actions";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useEffect, lazy, Suspense } from "react";
+import {
+  createBrowserRouter,
+  LoaderFunction,
+  RouterProvider,
+} from "react-router-dom";
 import RootLayout from "./pages/Root";
-import HomePage from "./pages/Home";
-import MoviesPage, { loader as MovieLoader } from "./pages/Movies";
-import getJSON from "./helpers/get-json";
+import HomePage, { loader as HomeLoader } from "./pages/Home";
+import { action as MovieAction } from "./components/Movies/Movie";
+import BookmarkedPage, { loader as BookmarkedLoader } from "./pages/Bookmarked";
+import Spinner from "./components/UI/Spinner";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 function App() {
-  // const dispatch = useAppDispatch();
+  useEffect(() => {
+    localStorage.setItem("idArr", JSON.stringify([]));
+  }, []);
 
-  // useEffect(() => {
-  //   dispatch(fetchMoviesData());
-  // }, [dispatch]);
+  const MoviePage = lazy(() => import("./pages/Movies"));
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout />,
       children: [
-        { index: true, element: <HomePage />, loader: getJSON },
+        {
+          index: true,
+          element: <HomePage />,
+          loader: HomeLoader,
+          action: MovieAction,
+        },
         {
           path: ":category",
-          element: <MoviesPage />,
-          loader: MovieLoader,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <MoviePage />
+            </Suspense>
+          ),
+          loader: ({ params }) =>
+            import("./pages/Movies").then((module: any) =>
+              module.loader({ params })
+            ),
+          action: MovieAction,
+        },
+        {
+          path: "bookmark",
+          element: <BookmarkedPage />,
+          loader: BookmarkedLoader,
+          action: MovieAction,
         },
       ],
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <SkeletonTheme baseColor="#202020" highlightColor="#444">
+      <RouterProvider router={router} />
+    </SkeletonTheme>
+  );
 }
 
 export default App;
-
-// loader: async () => {
-//   try {
-//     const response = await fetch("data.json");
-//     return response;
-//   } catch {
-//     console.log(`error`);
-//   }

@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type Imovie = {
   id?: string;
   title: string;
@@ -32,10 +34,28 @@ export type PossibleActions = {
 };
 
 export type MovieSecProps = {
-  data: Imovie[];
+  data: any;
   title: string | undefined;
 };
 
 export type MovieProps = {
   data: Imovie;
 };
+
+export type IstoredObj = {
+  title: string;
+  isBookmarked: string;
+};
+
+export type SearchBarProps = {
+  onFilter: () => void;
+};
+
+export interface ContextProviderProps {
+  children: ReactNode;
+}
+
+export interface MoviesContextType {
+  searchQuery: string;
+  addSearchQuery: (query: string) => void;
+}

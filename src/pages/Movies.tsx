@@ -1,66 +1,49 @@
 import React from "react";
 import MoviesSection from "../components/Movies/MoviesSection";
 import { useLoaderData, useParams } from "react-router-dom";
-import getJSON from "../helpers/get-json";
+import { LoaderAlgotithm } from "../helpers/get-json";
 import { Imovie } from "../models/@store-type";
-import { LoaderFunction } from "react-router-dom";
-import { nanoid } from "nanoid";
+import { LoaderFunction, Await, defer } from "react-router-dom";
+import { Suspense } from "react";
+import Spinner from "../components/UI/Spinner";
 
-const MoviesPage: React.FC<any> = (data) => {
-  const loaderData = useLoaderData();
+const MoviesPage: React.FC = () => {
+  const movies = useLoaderData();
+
   const parm = useParams();
 
-  return <MoviesSection title={parm.category} data={loaderData as Imovie[]} />;
+  return (
+    <>
+      <Suspense fallback={<Spinner />}>
+        <Await resolve={movies}>
+          {(loadedMovies) => (
+            <MoviesSection
+              title={parm.category}
+              data={loadedMovies as { movies: Imovie[] }}
+            />
+          )}
+        </Await>
+      </Suspense>
+    </>
+  );
 };
 
 export default MoviesPage;
 
-export const loader: LoaderFunction<{
-  params: { category: string };
-}> = async ({ params }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const parm = params.category === "series" ? "TV Series" : params.category;
-  const data = await getJSON();
-  const storedId = localStorage.getItem("id") as string;
-  console.log(storedId);
+  const loadData = await LoaderAlgotithm();
 
-  const filteredArr = data
-    .filter(
-      (movie: Imovie) => movie.category.toLowerCase() === parm?.toLowerCase()
-    )
-    .map((movie: Imovie) => {
-      const updateMovie = { id: nanoid(), ...movie };
+  const data = await new Promise((resolve) => {
+    setTimeout(() => {
+      const filteredArr = loadData.filter(
+        (movie: Imovie) => movie.category.toLowerCase() === parm!.toLowerCase()
+      );
+      resolve(filteredArr);
+    }, 500);
+  });
 
-      if (movie.title === storedId) {
-        return { ...updateMovie, isBookmarked: true };
-      }
-
-      return updateMovie;
-    });
-  console.log(filteredArr);
-
-  
-  localStorage.removeItem("id");
-  
-  return filteredArr;
+  return defer({
+    movies: await data,
+  });
 };
-
-// const addBokkmark = data.map((movie: Imovie) =>
-// movie.id === storedId ? { ...movie, isBookmarked: true } : movie
-// );
-// const addID = data.map((movie: Imovie) => {
-  //   const updateMovie = { id: nanoid(), ...movie };
-  
-  //   console.log(storedId);
-  //   if (movie.id === storedId) {
-    //     return { ...updateMovie, isBookmarked: true };
-    //   }
-
-    //   return updateMovie;
-    // });
-    // console.log(addID);
-    
-    // const onlyMovies = addID.filter(
-    //   (movie: Imovie) => movie.category.toLowerCase() === parm?.toLowerCase()
-    // );
-    
-    // return onlyMovies;

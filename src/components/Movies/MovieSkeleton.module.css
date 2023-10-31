@@ -1,0 +1,27 @@
+.skeletion__movie__container {
+  display: flex;
+  flex-direction: column;
+  /* height: 100%; */
+}
+
+.skeleton__first__row {
+  border-radius: 14px;
+}
+
+.skeleton__second__row {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.6rem;
+  /* height: 22rem; */
+}
+
+.skeleton__img {
+  width: 100%;
+  border-radius: 14px;
+  height: 21.5rem;
+}
+.skeleton__info__box {
+  width: 100%;
+  height: 4rem;
+  border-radius: 9px;
+}

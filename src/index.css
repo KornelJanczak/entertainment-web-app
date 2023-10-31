@@ -17,4 +17,14 @@ body {
   display: grid;
   grid-template-columns: auto 1fr;
   height: 100vh;
+
+}
+
+#root::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px #fc4747;
+}
+
+#root::-webkit-scrollbar-thumb {
+  background-color: #fc4747;
+  outline: 1px solid #fc4747;
 }

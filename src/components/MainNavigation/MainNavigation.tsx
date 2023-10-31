@@ -2,10 +2,10 @@ import React from "react";
 import classes from "./MainNavigation.module.css";
 import { NavLink } from "react-router-dom";
 import logoIcon from "../../assets/logo.svg";
-import homeIcon from "../../assets/icon-nav-home.svg";
-import moviesIcon from "../../assets/icon-nav-movies.svg";
-import seriesIcon from "../../assets/icon-nav-tv-series.svg";
-import bookmarkIcon from "../../assets/icon-nav-bookmark.svg";
+import HomeIcon from "../Icons/HomeIcon";
+import MoviesIcon from "../Icons/MoviesIcon";
+import SeriesIcon from "../Icons/SeriesIcon";
+import BookmarkIcon from "../Icons/BookmarkIcon";
 import userIcon from "../../assets/image-avatar.png";
 
 const MainNavigation: React.FC = () => {
@@ -21,11 +21,9 @@ const MainNavigation: React.FC = () => {
                 isActive ? classes.active : undefined
               }
             >
-              <img
-                src={homeIcon}
-                alt="home-icon"
-                className={classes.nav__icon}
-              />
+              <span className={classes.nav__icon}>
+                <HomeIcon />
+              </span>
             </NavLink>
           </li>
           <li className={classes.nav__li}>
@@ -35,11 +33,9 @@ const MainNavigation: React.FC = () => {
                 isActive ? classes.active : undefined
               }
             >
-              <img
-                src={moviesIcon}
-                alt="movies-icon"
-                className={classes.nav__icon}
-              />
+              <span className={classes.nav__icon}>
+                <MoviesIcon />
+              </span>
             </NavLink>
           </li>
           <li className={classes.nav__li}>
@@ -49,25 +45,21 @@ const MainNavigation: React.FC = () => {
                 isActive ? classes.active : undefined
               }
             >
-              <img
-                src={seriesIcon}
-                alt="home-icon"
-                className={classes.nav__icon}
-              />
+              <span className={classes.nav__icon}>
+                <SeriesIcon />
+              </span>
             </NavLink>
           </li>
           <li className={classes.nav__li}>
             <NavLink
-              to="/"
+              to="/bookmark"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
             >
-              <img
-                src={bookmarkIcon}
-                alt="home-icon"
-                className={classes.nav__icon}
-              />
+              <span className={classes.nav__icon}>
+                <BookmarkIcon />
+              </span>
             </NavLink>
           </li>
         </ul>
